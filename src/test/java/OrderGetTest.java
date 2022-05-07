@@ -29,20 +29,26 @@ public class OrderGetTest {
         burgersIngredientsID.addIngredient(ingredients.getRandomIngredient().get_id());
         ValidatableResponse responseOrder1 = client.createOrder(tokenUser, burgersIngredientsID);
         ValidatableResponse responseOrder2 = client.createOrder(tokenUser, burgersIngredientsID);
-        BurgersOrderWithName burgersOrderWithName1 = responseOrder1.extract().as(BurgersOrderWithName.class);
-        BurgersOrderWithName burgersOrderWithName2 = responseOrder2.extract().as(BurgersOrderWithName.class);
-        String idOrder1 = burgersOrderWithName1.getOrder().get_id();
-        String idOrder2 = burgersOrderWithName2.getOrder().get_id();
+
 
         ValidatableResponse responseGetOrders = client.getOrders(tokenUser);
-        BurgersGetOrders orders = responseGetOrders.extract().as(BurgersGetOrders.class);
         int statusCode = responseGetOrders.extract().statusCode();
-        int numberOfOrders = orders.getOrders().size();
-
         assertEquals("Не верный статус-код.", 200, statusCode);
+
+        BurgersGetOrders orders = responseGetOrders.extract().as(BurgersGetOrders.class);
+        int numberOfOrders = orders.getOrders().size();
         assertEquals("Не верное количество заказов.", 2, numberOfOrders);
-        assertEquals("ID заказа не совпало", idOrder1, orders.getOrders().get(0).get_id());
-        assertEquals("ID заказа не совпало", idOrder2, orders.getOrders().get(1).get_id());
+
+        if (responseOrder1.extract().statusCode() == 200) {
+            BurgersOrderWithName burgersOrderWithName1 = responseOrder1.extract().as(BurgersOrderWithName.class);
+            String idOrder1 = burgersOrderWithName1.getOrder().get_id();
+            assertEquals("ID заказа не совпало", idOrder1, orders.getOrders().get(0).get_id());
+        }
+        if (responseOrder2.extract().statusCode() == 200) {
+            BurgersOrderWithName burgersOrderWithName2 = responseOrder2.extract().as(BurgersOrderWithName.class);
+            String idOrder2 = burgersOrderWithName2.getOrder().get_id();
+            assertEquals("ID заказа не совпало", idOrder2, orders.getOrders().get(1).get_id());
+        }
     }
 
     @Test
@@ -51,8 +57,8 @@ public class OrderGetTest {
         ValidatableResponse responseGetOrders = client.getOrders(tokenUser);
         BurgersGetOrders orders = responseGetOrders.extract().as(BurgersGetOrders.class);
         int statusCode = responseGetOrders.extract().statusCode();
-        int numberOfOrders = orders.getOrders().size();
         assertEquals("Не верный статус-код.", 200, statusCode);
+        int numberOfOrders = orders.getOrders().size();
         assertEquals("Не верное количество заказов.", 0, numberOfOrders);
     }
 

@@ -32,10 +32,10 @@ public class UserChangeTest {
 
         int statusCode = changeResponse.extract().statusCode();
         String message = changeResponse.extract().path("message");
-        String actualEmail = changeResponse.extract().path("user.email");
-        String actualName = changeResponse.extract().path("user.name");
 
         assertEquals("Не верный статус-код. " + message, 200, statusCode);
+        String actualEmail = changeResponse.extract().path("user.email");
+        String actualName = changeResponse.extract().path("user.name");
         assertEquals(newEmail, actualEmail);
         assertEquals(newName, actualName);
     }
@@ -52,9 +52,9 @@ public class UserChangeTest {
 
         int statusCode = changeResponse.extract().statusCode();
         String message = changeResponse.extract().path("message");
-        String actualName = changeResponse.extract().path("user.name");
 
         assertEquals("Не верный статус-код. " + message, 200, statusCode);
+        String actualName = changeResponse.extract().path("user.name");
         assertEquals(newName, actualName);
     }
 
@@ -70,9 +70,9 @@ public class UserChangeTest {
 
         int statusCode = changeResponse.extract().statusCode();
         String message = changeResponse.extract().path("message");
-        String actualEmail = changeResponse.extract().path("user.email");
 
         assertEquals("Не верный статус-код. " + message, 200, statusCode);
+        String actualEmail = changeResponse.extract().path("user.email");
         assertEquals(newEmail, actualEmail);
     }
 

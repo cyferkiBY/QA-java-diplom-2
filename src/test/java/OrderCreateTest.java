@@ -34,11 +34,11 @@ public class OrderCreateTest {
         ValidatableResponse responseOrder = client.createOrder(tokenUser, burgersIngredientsID);
         int statusCode = responseOrder.extract().statusCode();
         BurgersOrderWithName orderWithName = responseOrder.extract().as(BurgersOrderWithName.class);
+
+        assertEquals("Не верный статус-код.", 200, statusCode);
         int numberOfIngredients = orderWithName.getOrder().getIngredients().size();
         String id1IngredientActual = orderWithName.getOrder().getIngredients().get(0).get_id();
         String id2IngredientActual = orderWithName.getOrder().getIngredients().get(1).get_id();
-
-        assertEquals("Не верный статус-код.", 200, statusCode);
         assertEquals("Не верное количество ингредиентов.", 2, numberOfIngredients);
         assertEquals("Не верный ID ингредиента.", id1IngredientExpected, id1IngredientActual);
         assertEquals("Не верный ID ингредиента.", id2IngredientExpected, id2IngredientActual);
