@@ -18,6 +18,11 @@ public class UserLoginTest {
         tokenUser = client.createUserAndReturnAccessToken(burgersUser);
     }
 
+    @After
+    public void cleanData() {
+        client.deleteUser(tokenUser);
+    }
+
     @Test
     @DisplayName("Check user can login with valid date")
     public void userCanLoginWithValidCredentials() {
@@ -96,10 +101,5 @@ public class UserLoginTest {
                 .build();
         ValidatableResponse loginResponse = client.loginUser(burgersUserCredential);
         assertEquals("Не верный статус-код.", 401, loginResponse.extract().statusCode());
-    }
-
-    @After
-    public void cleanData() {
-        client.deleteUser(tokenUser);
     }
 }

@@ -19,6 +19,11 @@ public class OrderGetTest {
         tokenUser = client.createUserAndReturnAccessToken(burgersUser);
     }
 
+    @After
+    public void cleanData() {
+        client.deleteUser(tokenUser);
+    }
+
     @Test
     @DisplayName("Check get user orders with two new order with valid token")
     public void checkGetUserOrdersWithTwoNewOrdersWithValidToken() {
@@ -78,10 +83,5 @@ public class OrderGetTest {
         ValidatableResponse responseGetOrders = client.getOrders(invalidTokenUser);
         int statusCode = responseGetOrders.extract().statusCode();
         assertEquals("Не верный статус-код.", 403, statusCode);
-    }
-
-    @After
-    public void cleanData() {
-        client.deleteUser(tokenUser);
     }
 }

@@ -18,6 +18,11 @@ public class UserChangeTest {
         tokenUser = client.createUserAndReturnAccessToken(burgersUser);
     }
 
+    @After
+    public void cleanData() {
+        client.deleteUser(tokenUser);
+    }
+
     @Test
     @DisplayName("Check user valid name and valid email has changed for an authorized user")
     public void checkValidNameAndEmailChangedForAuthorizedUser() {
@@ -124,10 +129,5 @@ public class UserChangeTest {
         String actualEmail = getDataResponse.extract().path("user.email");
         assertEquals("Поле Email изменено.", burgersUser.getEmail(), actualEmail);
         assertEquals("Поле Name изменено.", burgersUser.getName(), actualName);
-    }
-
-    @After
-    public void cleanData() {
-        client.deleteUser(tokenUser);
     }
 }

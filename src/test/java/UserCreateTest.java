@@ -17,6 +17,13 @@ public class UserCreateTest {
         client = new BurgersClient();
     }
 
+    @After
+    public void cleanData() {
+        for (String accessToken : usersTokensSetForDelete) {
+            client.deleteUser(accessToken);
+        }
+    }
+
     @Test
     @DisplayName("Check new user can create with valid date")
     public void checkNewUserCanCreateWithValidData() {
@@ -70,13 +77,6 @@ public class UserCreateTest {
         burgersUser.setName("");
         BurgersResponse burgersResponse = createUserAndAddToTokensSet(burgersUser);
         assertEquals("Не верный статус-код. " + burgersResponse.message, 403, burgersResponse.statusCode);
-    }
-
-    @After
-    public void cleanData() {
-        for (String accessToken : usersTokensSetForDelete) {
-            client.deleteUser(accessToken);
-        }
     }
 
     private BurgersResponse createUserAndAddToTokensSet(BurgersUser burgersUser) {

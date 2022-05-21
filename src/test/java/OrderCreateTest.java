@@ -20,6 +20,11 @@ public class OrderCreateTest {
         tokenUser = client.createUserAndReturnAccessToken(burgersUser);
     }
 
+    @After
+    public void cleanData() {
+        client.deleteUser(tokenUser);
+    }
+
     @Test
     @DisplayName("Check new order can create with two valid ingredients and valid token")
     public void checkNewOrderCanCreateWithTwoValidIngredientsAndValidToken() {
@@ -99,10 +104,5 @@ public class OrderCreateTest {
         ValidatableResponse responseOrder = client.createOrder(tokenUser, burgersIngredientsID);
         int statusCode = responseOrder.extract().statusCode();
         assertEquals("Не верный статус-код.", 500, statusCode);
-    }
-
-    @After
-    public void cleanData() {
-        client.deleteUser(tokenUser);
     }
 }
