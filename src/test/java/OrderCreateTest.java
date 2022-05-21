@@ -38,9 +38,9 @@ public class OrderCreateTest {
 
         ValidatableResponse responseOrder = client.createOrder(tokenUser, burgersIngredientsID);
         int statusCode = responseOrder.extract().statusCode();
-        BurgersOrderWithName orderWithName = responseOrder.extract().as(BurgersOrderWithName.class);
-
         assertEquals("Не верный статус-код.", 200, statusCode);
+
+        BurgersOrderWithName orderWithName = responseOrder.extract().as(BurgersOrderWithName.class);
         int numberOfIngredients = orderWithName.getOrder().getIngredients().size();
         String id1IngredientActual = orderWithName.getOrder().getIngredients().get(0).get_id();
         String id2IngredientActual = orderWithName.getOrder().getIngredients().get(1).get_id();
