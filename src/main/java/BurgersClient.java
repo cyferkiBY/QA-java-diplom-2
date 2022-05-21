@@ -3,7 +3,7 @@ import io.restassured.response.ValidatableResponse;
 
 import static io.restassured.RestAssured.given;
 
-public class BurgersClient extends BurgersRestClient {
+public class BurgersClient extends BurgersAPISpecifications {
 
     private static final String API_PATH = "api/";
     private static final String AUTHORISATION_PATH = API_PATH + "auth/";

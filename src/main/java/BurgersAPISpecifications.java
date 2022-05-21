@@ -2,7 +2,7 @@ import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 
-public class BurgersRestClient {
+public class BurgersAPISpecifications {
     public static final String BASE_URL = "https://stellarburgers.nomoreparties.site/";
 
     protected RequestSpecification getBaseSpec() {
