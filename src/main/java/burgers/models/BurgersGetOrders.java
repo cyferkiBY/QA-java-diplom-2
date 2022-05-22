@@ -1,3 +1,5 @@
+package burgers.models;
+
 import lombok.Builder;
 import lombok.Data;
 

@@ -1,7 +1,13 @@
+package burgers.api;
+
+import burgers.models.BurgersIngredients;
+import burgers.models.BurgersIngredientsID;
+import burgers.models.BurgersUser;
 import io.qameta.allure.Step;
 import io.restassured.response.ValidatableResponse;
 
 import static io.restassured.RestAssured.given;
+
 
 public class BurgersClient extends BurgersAPISpecifications {
 

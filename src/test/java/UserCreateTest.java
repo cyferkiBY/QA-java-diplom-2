@@ -1,3 +1,6 @@
+import burgers.api.BurgersClient;
+import burgers.models.BurgersResponse;
+import burgers.models.BurgersUser;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import org.junit.After;
@@ -29,7 +32,7 @@ public class UserCreateTest {
     public void checkNewUserCanCreateWithValidData() {
         BurgersUser burgersUser = BurgersUser.getRandomUser();
         BurgersResponse burgersResponse = createUserAndAddToTokensSet(burgersUser);
-        assertEquals("Не верный статус-код. " + burgersResponse.message, 200, burgersResponse.statusCode);
+        assertEquals("Не верный статус-код. " + burgersResponse.getMessage(), 200, burgersResponse.getStatusCode());
     }
 
     @Test
@@ -38,7 +41,7 @@ public class UserCreateTest {
         BurgersUser burgersUser = BurgersUser.getRandomUser();
         createUserAndAddToTokensSet(burgersUser);
         BurgersResponse burgersResponse = createUserAndAddToTokensSet(burgersUser);
-        assertEquals("Не верный статус-код. " + burgersResponse.message, 403, burgersResponse.statusCode);
+        assertEquals("Не верный статус-код. " + burgersResponse.getMessage(), 403, burgersResponse.getStatusCode());
     }
 
     @Test
@@ -49,7 +52,7 @@ public class UserCreateTest {
         burgersUser.setName("NewName");
         burgersUser.setPassword("NewPassword");
         BurgersResponse burgersResponse = createUserAndAddToTokensSet(burgersUser);
-        assertEquals("Не верный статус-код. " + burgersResponse.message, 403, burgersResponse.statusCode);
+        assertEquals("Не верный статус-код. " + burgersResponse.getMessage(), 403, burgersResponse.getStatusCode());
     }
 
     @Test
@@ -58,7 +61,7 @@ public class UserCreateTest {
         BurgersUser burgersUser = BurgersUser.getRandomUser();
         burgersUser.setPassword("");
         BurgersResponse burgersResponse = createUserAndAddToTokensSet(burgersUser);
-        assertEquals("Не верный статус-код. " + burgersResponse.message, 403, burgersResponse.statusCode);
+        assertEquals("Не верный статус-код. " + burgersResponse.getMessage(), 403, burgersResponse.getStatusCode());
     }
 
     @Test
@@ -67,7 +70,7 @@ public class UserCreateTest {
         BurgersUser burgersUser = BurgersUser.getRandomUser();
         burgersUser.setEmail("");
         BurgersResponse burgersResponse = createUserAndAddToTokensSet(burgersUser);
-        assertEquals("Не верный статус-код. " + burgersResponse.message, 403, burgersResponse.statusCode);
+        assertEquals("Не верный статус-код. " + burgersResponse.getMessage(), 403, burgersResponse.getStatusCode());
     }
 
     @Test
@@ -76,7 +79,7 @@ public class UserCreateTest {
         BurgersUser burgersUser = BurgersUser.getRandomUser();
         burgersUser.setName("");
         BurgersResponse burgersResponse = createUserAndAddToTokensSet(burgersUser);
-        assertEquals("Не верный статус-код. " + burgersResponse.message, 403, burgersResponse.statusCode);
+        assertEquals("Не верный статус-код. " + burgersResponse.getMessage(), 403, burgersResponse.getStatusCode());
     }
 
     private BurgersResponse createUserAndAddToTokensSet(BurgersUser burgersUser) {
@@ -95,6 +98,6 @@ public class UserCreateTest {
             accessToken = createResponse.extract().path("accessToken");
             usersTokensSetForDelete.add(accessToken);
         }
-        return new BurgersResponse(statusCode, message, accessToken);
+        return BurgersResponse.builder().statusCode(statusCode).message(message).accessToken(accessToken).build();
     }
 }

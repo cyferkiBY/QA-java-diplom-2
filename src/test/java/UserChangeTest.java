@@ -1,3 +1,5 @@
+import burgers.api.BurgersClient;
+import burgers.models.BurgersUser;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import org.junit.After;

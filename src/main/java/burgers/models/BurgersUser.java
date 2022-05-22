@@ -1,3 +1,5 @@
+package burgers.models;
+
 import lombok.Builder;
 import lombok.Data;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -18,7 +20,7 @@ public class BurgersUser {
     }
 
     public static String getRandomEmail() {
-        return (RandomStringUtils.randomAlphabetic(10)+"@gmail.com").toLowerCase();
+        return (RandomStringUtils.randomAlphabetic(10) + "@gmail.com").toLowerCase();
     }
 
     public static String getRandomPassword() {

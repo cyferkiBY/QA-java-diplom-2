@@ -1,3 +1,5 @@
+package burgers.models;
+
 import lombok.Builder;
 import lombok.Data;
 
@@ -5,14 +7,12 @@ import java.util.List;
 
 @Data
 @Builder
-public class BurgersOrder {
-    private List<BurgersIngredient> ingredients;
+public class BurgersGetOrder {
     private String _id;
-    private BurgersOrderOwner owner;
+    private List<String> ingredients;
     private String status;
     private String name;
     private String createdAt;
     private String updatedAt;
     private int number;
-    private int price;
 }

@@ -1,3 +1,5 @@
+package burgers.models;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +10,7 @@ public class BurgersIngredientsID {
         this.ingredients = new ArrayList<String>();
     }
 
-    void addIngredient(String id) {
+    public void addIngredient(String id) {
         ingredients.add(id);
     }
 }

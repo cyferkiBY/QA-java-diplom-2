@@ -1,4 +1,6 @@
-import groovy.transform.builder.Builder;
+package burgers.models;
+
+import lombok.Builder;
 import lombok.Data;
 
 @Data

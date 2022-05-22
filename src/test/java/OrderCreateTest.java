@@ -1,3 +1,8 @@
+import burgers.api.BurgersClient;
+import burgers.models.BurgersIngredients;
+import burgers.models.BurgersIngredientsID;
+import burgers.models.BurgersOrderWithName;
+import burgers.models.BurgersUser;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import org.junit.After;
@@ -41,11 +46,12 @@ public class OrderCreateTest {
         assertEquals("Не верный статус-код.", 200, statusCode);
 
         BurgersOrderWithName orderWithName = responseOrder.extract().as(BurgersOrderWithName.class);
-        int numberOfIngredients = orderWithName.getOrder().getIngredients().size();
-        String id1IngredientActual = orderWithName.getOrder().getIngredients().get(0).get_id();
-        String id2IngredientActual = orderWithName.getOrder().getIngredients().get(1).get_id();
+        int numberOfIngredients = getNumberOfIngredientsInTheOrder(orderWithName);
+
         assertEquals("Не верное количество ингредиентов.", 2, numberOfIngredients);
+        String id1IngredientActual = orderWithName.getOrder().getIngredients().get(0).get_id();
         assertEquals("Не верный ID ингредиента.", id1IngredientExpected, id1IngredientActual);
+        String id2IngredientActual = orderWithName.getOrder().getIngredients().get(1).get_id();
         assertEquals("Не верный ID ингредиента.", id2IngredientExpected, id2IngredientActual);
     }
 
@@ -104,5 +110,15 @@ public class OrderCreateTest {
         ValidatableResponse responseOrder = client.createOrder(tokenUser, burgersIngredientsID);
         int statusCode = responseOrder.extract().statusCode();
         assertEquals("Не верный статус-код.", 500, statusCode);
+    }
+
+    private int getNumberOfIngredientsInTheOrder(BurgersOrderWithName orderWithName) {
+        int numberOfIngredients = 0;
+        try {
+            numberOfIngredients = orderWithName.getOrder().getIngredients().size();
+        } catch (NullPointerException thrown) {
+            String message = thrown.getMessage();
+        }
+        return numberOfIngredients;
     }
 }
